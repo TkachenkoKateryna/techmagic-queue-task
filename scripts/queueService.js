@@ -1,12 +1,13 @@
-const MY_AGE = 24;
-let dequeueBtn = document.getElementById('dequeueBtn');
-let submitBtn = document.getElementById('submitBtn');
-let form = document.getElementById('form');
-let queueList = document.getElementById('queueList');
-let input = document.getElementById('input');
+const MY_AGE = 22;
+const QUEUE_NAME = 'queue';
+const dequeueBtn = document.getElementById('dequeueBtn');
+const submitBtn = document.getElementById('submitBtn');
+const form = document.getElementById('form');
+const queueList = document.getElementById('queueList');
+const input = document.getElementById('input');
 
-const localStorageQueue = JSON.parse(localStorage.getItem('queue'));
-let queue = localStorageQueue || [];
+const localStorageQueue = JSON.parse(localStorage.getItem(QUEUE_NAME));
+const queue = localStorageQueue || [];
 
 if (localStorageQueue) {
 	showUl(queue, queueList);
@@ -22,11 +23,11 @@ const onEnqueue = (event) => {
 		return;
 	}
 
-	let newElement = document.getElementById('input').value;
+	const newElement = input.value;
 
 	if (newElement) {
 		queue.push(newElement);
-		setQueueToLocalStorage(queue);
+		setQueueToLocalStorage(QUEUE_NAME, queue);
 		renderQueueElement(newElement, queueList);
 		form.reset();
 		enableSubmitButton();
@@ -43,11 +44,11 @@ const onDequeue = () => {
 
 	queue.shift();
 	queueList.removeChild(queueList.firstChild);
-	setQueueToLocalStorage(queue);
+	setQueueToLocalStorage(QUEUE_NAME, queue);
 };
 
 form.addEventListener('submit', onEnqueue);
-input.addEventListener('change', (event) => {
+input.addEventListener('input', (event) => {
 	enableSubmitButton(event.target.value);
 });
 dequeueBtn.addEventListener('click', onDequeue);

@@ -11,11 +11,9 @@ const showUl = (queue, queueList) => {
 };
 
 const enableSubmitButton = (value) => {
-	value
-		? submitBtn.removeAttribute('disabled')
-		: submitBtn.setAttribute('disabled', 'disabled');
+	submitBtn.disabled = !value;
 };
 
-const setQueueToLocalStorage = (queue) => {
-	localStorage.setItem('queue', JSON.stringify(queue));
+const setQueueToLocalStorage = (itemName, value) => {
+	localStorage.setItem(itemName, JSON.stringify(value));
 };
